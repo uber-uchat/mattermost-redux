@@ -311,6 +311,52 @@ describe('Actions.Posts', () => {
         assert.equal(postsForChannel.length, 2, 'wrong size');
     });
 
+    it('loadPostsForChannel', async () => {
+        const channelId = TestHelper.basicChannel.id;
+
+        const post1 = await Client4.createPost(
+            TestHelper.fakePost(channelId)
+        );
+        const post1a = await Client4.createPost(
+            {...TestHelper.fakePost(channelId), root_id: post1.id}
+        );
+
+        await Actions.getPosts(
+            channelId
+        )(store.dispatch, store.getState);
+
+        const post2 = await Client4.createPost(
+            TestHelper.fakePost(channelId)
+        );
+        const post3 = await Client4.createPost(
+            TestHelper.fakePost(channelId)
+        );
+        const post3a = await Client4.createPost(
+            {...TestHelper.fakePost(channelId), root_id: post3.id}
+        );
+
+        await Actions.loadPostsForChannel(
+            channelId
+        )(store.dispatch, store.getState);
+
+        const {posts, postsInChannel} = store.getState().entities.posts;
+
+        assert.ok(posts);
+        assert.ok(postsInChannel);
+
+        const postsForChannel = postsInChannel[channelId];
+        assert.ok(postsForChannel);
+        assert.equal(postsForChannel[0], post3a.id, 'wrong order for post3a');
+        assert.equal(postsForChannel[1], post3.id, 'wrong order for post3');
+        assert.equal(postsForChannel[3], post1a.id, 'wrong order for post1a');
+
+        assert.ok(posts[post1.id]);
+        assert.ok(posts[post1a.id]);
+        assert.ok(posts[post2.id]);
+        assert.ok(posts[post3.id]);
+        assert.ok(posts[post3a.id]);
+    });
+
     it('getPostsBefore', async () => {
         const channelId = TestHelper.basicChannel.id;
 

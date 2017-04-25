@@ -12,6 +12,8 @@ import {getLogErrorAction} from './errors';
 import {deletePreferences, savePreferences} from './preferences';
 import {getProfilesByIds, getStatusesByIds} from './users';
 
+import * as Selectors from 'selectors/entities/posts';
+
 export function createPost(post, files) {
     return async (dispatch, getState) => {
         dispatch({type: PostTypes.CREATE_POST_REQUEST}, getState);
@@ -322,6 +324,19 @@ export function unflagPost(postId) {
     };
 }
 
+export function loadPostsForChannel(channelId) {
+    return async (dispatch, getState) => {
+        const posts = Selectors.getPostsInChannel(getState(), channelId);
+        const latestPostTime = Selectors.getLatestPostTimeInChannel(getState(), channelId);
+
+        if (posts.length === 0 || posts.length < Posts.POST_CHUNK_SIZE) {
+            return await getPosts(channelId)(dispatch, getState);
+        }
+
+        return await getPostsSince(channelId, latestPostTime)(dispatch, getState);
+    };
+}
+
 export default {
     createPost,
     editPost,
@@ -332,5 +347,6 @@ export default {
     getPostsSince,
     getPostsBefore,
     getPostsAfter,
-    selectPost
+    selectPost,
+    loadPostsForChannel
 };

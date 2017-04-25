@@ -7,8 +7,12 @@ export function getAllPosts(state) {
     return state.entities.posts.posts;
 }
 
-function getPostIdsInCurrentChannel(state) {
+export function getPostIdsInCurrentChannel(state) {
     return state.entities.posts.postsInChannel[state.entities.channels.currentChannelId] || [];
+}
+
+export function getPostIdsInChannel(state, channelId) {
+    return state.entities.posts.postsInChannel[channelId] || [];
 }
 
 export const getPostsInCurrentChannel = createSelector(
@@ -16,6 +20,30 @@ export const getPostsInCurrentChannel = createSelector(
     getPostIdsInCurrentChannel,
     (posts, postIds) => {
         return postIds.map((id) => posts[id]);
+    }
+);
+
+export const getPostsInChannel = createSelector(
+    getAllPosts,
+    getPostIdsInChannel,
+    (posts, postIds) => {
+        return postIds.map((id) => posts[id]);
+    }
+);
+
+export const getLatestPostTimeInChannel = createSelector(
+    getPostsInChannel,
+    (posts) => {
+        let latestTime = 0;
+        posts.forEach((p) => {
+            if (p.update_at > latestTime) {
+                latestTime = p.update_at;
+            }
+            if (p.create_at > latestTime) {
+                latestTime = p.create_at;
+            }
+        });
+        return latestTime;
     }
 );
 
