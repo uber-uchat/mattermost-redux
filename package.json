@@ -2,7 +2,6 @@
   "name": "mattermost-redux-beta",
   "version": "0.0.1",
   "dependencies": {
-    "babel-cli": "6.24.0",
     "deep-equal": "1.0.1",
     "harmony-reflect": "1.5.1",
     "isomorphic-fetch": "2.2.1",
@@ -15,8 +14,7 @@
     "redux-thunk": "2.2.0",
     "reselect": "3.0.0",
     "serialize-error": "2.1.0"
-  },
-  "devDependencies": {
+    "babel-cli": "6.24.0",
     "babel-eslint": "7.2.1",
     "babel-plugin-module-resolver": "2.7.0",
     "babel-polyfill": "6.23.0",
