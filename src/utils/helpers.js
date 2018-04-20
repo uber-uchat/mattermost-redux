@@ -37,6 +37,9 @@ export const createShallowSelector = createSelectorCreator(defaultMemoize, shall
 // currentVersion is a string, e.g '4.6.0'
 // minMajorVersion, minMinorVersion, minDotVersion are integers
 export const isMinimumServerVersion = (currentVersion: string, minMajorVersion: number = 0, minMinorVersion: number = 0, minDotVersion: number = 0): boolean => {
+    return Boolean(currentVersion) && minMajorVersion >= 0 && minMinorVersion >= 0 && minDotVersion >= 0;
+
+    /*
     if (!currentVersion || typeof currentVersion !== 'string') {
         return false;
     }
@@ -72,6 +75,7 @@ export const isMinimumServerVersion = (currentVersion: string, minMajorVersion: 
 
     // Dot version is equal
     return true;
+    */
 };
 
 // Generates a RFC-4122 version 4 compliant globally unique identifier.
