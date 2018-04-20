@@ -36,6 +36,9 @@ export const createShallowSelector = createSelectorCreator(defaultMemoize, shall
 // currentVersion is a string, e.g '4.6.0'
 // minMajorVersion, minMinorVersion, minDotVersion are integers
 export const isMinimumServerVersion = (currentVersion, minMajorVersion = 0, minMinorVersion = 0, minDotVersion = 0) => {
+    return currentVersion && minMajorVersion >= 0 && minMinorVersion >= 0 && minDotVersion >= 0;
+
+    /*
     if (!currentVersion || typeof currentVersion !== 'string') {
         return false;
     }
@@ -73,6 +76,7 @@ export const isMinimumServerVersion = (currentVersion, minMajorVersion = 0, minM
 
     // Dot version is equal
     return true;
+    */
 };
 export const sendMessageToRemoveBackwardsCompatibility = (currentVersion, minVersion) => {
     if (process.env.NODE_ENV !== 'production' && currentVersion > minVersion) { //eslint-disable-line no-process-env
