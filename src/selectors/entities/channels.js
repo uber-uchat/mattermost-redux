@@ -650,6 +650,23 @@ export const getSortedDirectChannelIds = createIdsSelector(
     filterUnreadChannels
 );
 
+// Feeds
+export const getSortedFeedChannelIds = createSelector(
+    getCurrentUser,
+    getChannelsInCurrentTeam,
+    getMyChannelMemberships,
+    (currentUser, channels, myMembers) => {
+        let locale = 'en';
+        if (currentUser && currentUser.locale) {
+            locale = currentUser.locale;
+        }
+
+        return channels.filter((c) => myMembers.hasOwnProperty(c.id) && c.type === General.OPEN_FEED_CHANNEL).
+        sort(sortChannelsByDisplayName.bind(null, locale)).
+        map(c => c.id);
+    }
+);
+
 export function getGroupOrDirectChannelVisibility(state, channelId) {
     return isGroupOrDirectChannelVisible(
         getChannel(state, channelId),
