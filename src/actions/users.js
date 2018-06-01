@@ -915,12 +915,13 @@ export function searchProfiles(term, options = {}) {
 }
 
 let statusIntervalId = '';
-export function startPeriodicStatusUpdates() {
+export function startPeriodicStatusUpdates(callback) {
     return async (dispatch, getState) => {
         clearInterval(statusIntervalId);
 
         statusIntervalId = setInterval(
             () => {
+                callback();
                 const {statuses} = getState().entities.users;
 
                 if (!statuses) {
@@ -941,9 +942,10 @@ export function startPeriodicStatusUpdates() {
     };
 }
 
-export function stopPeriodicStatusUpdates() {
+export function stopPeriodicStatusUpdates(callback) {
     return async () => {
         if (statusIntervalId) {
+            callback();
             clearInterval(statusIntervalId);
         }
 

@@ -54,7 +54,7 @@ import {getUserIdFromChannelName} from 'utils/channel_utils';
 import {isFromWebhook, isSystemMessage, getLastCreateAt, shouldIgnorePost} from 'utils/post_utils';
 import EventEmitter from 'utils/event_emitter';
 
-export function init(platform, siteUrl, token, optionalWebSocket) {
+export function init(platform, siteUrl, token, optionalWebSocket, callback) {
     return async (dispatch, getState) => {
         const config = getState().entities.general.config;
         let connUrl = siteUrl || config.WebsocketURL || Client4.getUrl();
@@ -94,13 +94,15 @@ export function init(platform, siteUrl, token, optionalWebSocket) {
             websocketOpts.webSocketConnector = optionalWebSocket;
         }
 
+        callback();
         return websocketClient.initialize(authToken, dispatch, getState, websocketOpts);
     };
 }
 
 let reconnect = false;
-export function close(shouldReconnect = false) {
+export function close(shouldReconnect = false, callback) {
     return async (dispatch, getState) => {
+        callback();
         reconnect = shouldReconnect;
         websocketClient.close(true);
         if (dispatch) {
