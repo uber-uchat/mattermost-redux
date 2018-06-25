@@ -609,7 +609,7 @@ export const getSortedFavoriteChannelIds = createIdsSelector(
 );
 
 // Public Channels
-export const getPublicChannels = createIdsSelector(
+export const getPublicChannels = createSelector(
     getCurrentUser,
     getAllChannels,
     getMyChannelMemberships,
@@ -650,7 +650,7 @@ export const getSortedPublicChannelIds = createIdsSelector(
 );
 
 // Private Channels
-export const getPrivateChannels = createIdsSelector(
+export const getPrivateChannels = createSelector(
     getCurrentUser,
     getAllChannels,
     getMyChannelMemberships,
@@ -692,7 +692,7 @@ export const getSortedPrivateChannelIds = createIdsSelector(
 );
 
 // Direct Messages
-export const getDirectChannels = createIdsSelector(
+export const getDirectChannels = createSelector(
     getCurrentUser,
     getUsers,
     getAllChannels,
@@ -820,7 +820,7 @@ export const filterPostIds = (condition) => {
     );
 };
 
-const getAllActiveChannels = createIdsSelector(
+const getAllActiveChannels = createSelector(
     getPublicChannels,
     getPrivateChannels,
     getDirectChannels,
@@ -891,7 +891,7 @@ export const getOrderedChannelIds = (state, lastUnreadChannel, grouping, sorting
         if (favoritesAtTop) {
             channels.unshift({
                 type: 'favorite',
-                name: 'FAVORITE MESSAGES',
+                name: 'FAVORITE CHANNELS',
                 items: getSortedFavoriteChannelIds(
                     state,
                     lastUnreadChannel,
@@ -924,7 +924,7 @@ export const getOrderedChannelIds = (state, lastUnreadChannel, grouping, sorting
     let name = 'CHANNELS';
     if (sorting === 'recent') {
         type = 'recent';
-        name = 'RECENT CHANNELS';
+        name = 'RECENT ACTIVITY';
     }
 
     return [{
