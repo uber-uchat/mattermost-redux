@@ -874,3 +874,4 @@ describe('Selectors.Channels', () => {
         assert.ok(fromRecencyInChan6State[0].items[0] === chan6.id);
     });
 });
+});
