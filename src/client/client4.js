@@ -1322,10 +1322,10 @@ export default class Client4 {
         );
     };
 
-    searchChannels = async (teamId, term) => {
+    searchChannels = async (teamId, term, includePrivate = false) => {
         return this.doFetch(
             `${this.getTeamRoute(teamId)}/channels/search`,
-            {method: 'post', body: JSON.stringify({term})}
+            {method: 'post', body: JSON.stringify({term, include_private: includePrivate})}
         );
     };
 
