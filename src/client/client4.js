@@ -2169,6 +2169,13 @@ export default class Client4 {
         );
     };
 
+    sendTelemetry = async (telemetry) => {
+        return this.doFetch(
+            `${this.getBaseRoute()}/telemetry/mobile`,
+            {method: 'post', body: JSON.stringify(telemetry)}
+        );
+    };
+
     reloadConfig = async () => {
         return this.doFetch(
             `${this.getBaseRoute()}/config/reload`,
