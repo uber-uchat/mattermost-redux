@@ -160,10 +160,11 @@ export function setServerVersion(serverVersion: string): ActionFunc {
     };
 }
 
-export function setStoreFromLocalData(data: { token: string, url: string }): ActionFunc {
+export function setStoreFromLocalData(data: { token: string, url: string, appVersion: string }): ActionFunc {
     return async (dispatch: DispatchFunc, getState) => {
         Client4.setToken(data.token);
         Client4.setUrl(data.url);
+        Client4.setAppVersion(data.appVersion)
 
         return loadMe()(dispatch, getState);
     };

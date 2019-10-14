@@ -29,6 +29,7 @@ export default class Client4 {
         this.serverVersion = '';
         this.clusterId = '';
         this.token = '';
+        this.appVersion = '';
         this.csrf = '';
         this.url = '';
         this.urlVersion = '/api/v4';
@@ -63,6 +64,14 @@ export default class Client4 {
 
     setToken(token) {
         this.token = token;
+    }
+
+    getAppVersion() {
+        return this.appVersion;
+    }
+
+    setAppVersion(appVersion) {
+        this.appVersion = appVersion;
     }
 
     setCSRF(csrfToken) {
