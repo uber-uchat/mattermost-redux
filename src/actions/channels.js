@@ -968,6 +968,20 @@ export function getChannelStats(channelId: string): ActionFunc {
     };
 }
 
+export function getChannelMembersEmails(channelId: string): ActionFunc {
+    return async (dispatch, getState) => {
+        let result;
+        try {
+            result = await Client4.getChannelMembersEmails(channelId);
+        } catch (error) {
+            forceLogoutIfNecessary(error, dispatch, getState);
+            dispatch(logError(error));
+            return {error};
+        }
+        return {data: result};
+    };
+}
+
 export function addChannelMember(channelId: string, userId: string, postRootId: string = ''): ActionFunc {
     return async (dispatch, getState) => {
         let member;
@@ -1300,6 +1314,7 @@ export default {
     autocompleteChannelsForSearch,
     searchChannels,
     getChannelStats,
+    getChannelMembersEmails,
     addChannelMember,
     removeChannelMember,
     updateChannelHeader,

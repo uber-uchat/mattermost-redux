@@ -1391,6 +1391,13 @@ export default class Client4 {
         );
     };
 
+    getChannelMembersEmails = async (channelId) => {
+        return this.doFetch(
+            `${this.getChannelRoute(channelId)}/members/emails`,
+            {method: 'get'}
+        );
+    };
+
     viewMyChannel = async (channelId, prevChannelId) => {
         const data = {channel_id: channelId, prev_channel_id: prevChannelId};
         return this.doFetch(
