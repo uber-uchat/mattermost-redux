@@ -195,7 +195,7 @@ const defaultSidebarPrefs = {
     grouping: 'by_type',
     unreads_at_top: 'true',
     favorite_at_top: 'true',
-    sorting: 'alpha',
+    sorting: 'recent',
 };
 
 export const getSidebarPreferences = createSelector(
