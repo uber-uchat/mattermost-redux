@@ -148,6 +148,13 @@ export function filterChannels(unreadIds: Array<string>, favoriteIds: Array<stri
         });
     }
 
+    if (!unreadsAtTop) {
+        const readChannels = channels.filter((id) => {
+            return !unreadIds.includes(id);
+        });
+        channels = channels.push(...readChannels);
+    }
+
     return channels;
 }
 
